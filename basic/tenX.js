@@ -1,48 +1,56 @@
-var timeMinute = $('#timeMinute');
-var timeSecond = $('#timeSecond');
-var errorDiv = $('#error');
+const timeMinute = $('#timeMinute');
+const timeSecond = $('#timeSecond');
+const errorDiv = $('#error');
 
 $(document).ready(function () {
-  var minutes = 2;
-  var seconds = 0;
+  var minutes = 0;
+  var seconds = 5;
   timeMinute.val(minutes);
   timeSecond.val(seconds);
 });
 
 $('#startTimer').click(function () {
-  minutes = Number( timeMinute.val());
-  seconds = Number(timeSecond.val());
+  minutes = parseInt(timeMinute.val());
+  seconds = parseInt(timeSecond.val());
   countDownValidate();
 });
 
 function countDownValidate() {
-  if (minutes < 0) {
-    errorDiv.html('Minute cannot be negative! Error');
+    let errorMsgs = {
+      noError: '',
+      Error: 'Invalid Input',
+    };
+
+  if (minutes < 0 || seconds < 0 || minutes > 60 || seconds > 60) {
+    errorDiv.html(errorMsgs.Error);
     errorDiv.show();
     return;
-  } else if (minutes > 60) {
-    errorDiv.html('Minute cannot be greater than 60! Error');
-    errorDiv.show();
-    return;
-  } else if (seconds < 0) {
-    errorDiv.html('Seconds cannot be negative! Error');
-    errorDiv.show();
-    return;
-  } else if (seconds > 60) {
-    errorDiv.html('Second cannot be greater than 60! Error');
-    errorDiv.show();
-    return;
+  } else {
+    // remove error msg if any
+    errorDiv.html('');
+    errorDiv.hide();
+    countDownTimer();
   }
-  countDownTimer();
 }
 
 function countDownTimer() {
-    var output = $('#output');
-    errorDiv.html("");
-    errorDiv.show();
-    var totalSeconds = minutes * 60 + seconds;
-    for (i=totalSeconds; i>=0; i--){
-        output.val(i);
-        console.log("Hi");
+  // calc
+  let totalSeconds = minutes * 60 + seconds;
+  let counter = totalSeconds;
+  let interval;
+
+  interval = setInterval(() => {
+    let speedUpFactor = parseInt($('#speedUpFactor').val());
+    if ($('#applyTenX').is(':checked') && !isNaN(speedUpFactor)) {
+      // speedUpFactor checkbox
+      counter -= speedUpFactor;
+    } else {
+      counter--;
     }
+    if (counter < 0) {
+      clearInterval(interval);
+      return;
+    }
+    $('#output').val(counter); // update Timer display
+  }, 1000);
 }
