@@ -32,6 +32,12 @@
             justify-content: space-around;
             background-color: rgb(27, 32, 36);
         }
+
+        #error{
+            display: none;
+            color: red;
+            font-size: 12px;
+        }
     </style>
 </head>
 
@@ -39,19 +45,27 @@
     <div class="wrapper">
         <div class="container">
             <div>
-                <input type="number" name="number1" id="number1">
-                <input type="number" name="number2" id="number2">
+                <div>
+                    <label for="timeMinute">Minutes</label>
+                    <input type="number" name="timeMinute" id="timeMinute">
+                </div>
+                <div>
+                    <label for="timeSecond">Seconds</label>
+                    <input type="number" name="timeSecond" id="timeSecond">
+                </div>
+                <div id="error">Hi</div>
             </div>
             <div>
                 <input type="number" name="timeSpeed" id="timeSpeed" placeholder="Speed up by">
                 <input type="checkbox" name="applyTenX" id="applyTenX">
             </div>
             <div>
-                <input type="text" name="output" id="output" disabled>
-            </div>
-            <div>
                 <button id="startTimer">Start</button>
                 <button id="resetTimer">Reset</button>
+            </div>
+            <div>
+                <label for="output">Timer</label>
+                <input type="text" name="output" id="output" disabled>
             </div>
             <div id="test">
                 <p>Test area</p>
